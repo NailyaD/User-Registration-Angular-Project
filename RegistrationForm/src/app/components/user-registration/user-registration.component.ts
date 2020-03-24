@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
+import {PrintToConsoleService} from "../../services/print-to-console/print-to-console.service";
+import {AppValidators} from "../../validators/app-validators";
 
 @Component({
   selector: 'app-user-registration',
@@ -9,9 +11,10 @@ import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 export class UserRegistrationComponent implements OnInit {
 
   myReactiveForm: FormGroup;
-  property: 'promptLabel';
+  weakPasswordText = "Слабый пароль";
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private printToConsoleService: PrintToConsoleService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -19,12 +22,12 @@ export class UserRegistrationComponent implements OnInit {
 
   initForm() {
     this.myReactiveForm = this.fb.group({
-      userName: new FormControl('Username', Validators.required),
-      userEmail: new FormControl('Email', [
-        Validators.required,
-        Validators.email
-      ]),
-      userPassword: new FormControl('Password', Validators.required)
+      userName: ['', [Validators.required,
+        AppValidators.notVasya,
+        AppValidators.notName('petya')]
+      ],
+      userEmail: ['', [Validators.required, Validators.email]],
+      userPassword: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -36,13 +39,13 @@ export class UserRegistrationComponent implements OnInit {
     return result;
   }
 
-  printInConsole() {
+  onSubmit() {
     const controls = this.myReactiveForm.controls;
 
     if (this.myReactiveForm.invalid) {
       Object.keys(controls).forEach(controlName => controls[controlName].markAsTouched());
       return;
     }
-    console.log(this.myReactiveForm.value);
+    this.printToConsoleService.printRegistrationForm(this.myReactiveForm.value);
   }
 }
