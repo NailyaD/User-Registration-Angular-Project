@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
-import {PrintToConsoleService} from "../../services/print-to-console/print-to-console.service";
-import {AppValidators} from "../../validators/app-validators";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {PrintToConsoleService} from '../../services/print-to-console/print-to-console.service';
+import {AppValidators} from '../../validators/app-validators';
 
 @Component({
   selector: 'app-user-registration',
@@ -11,7 +11,7 @@ import {AppValidators} from "../../validators/app-validators";
 export class UserRegistrationComponent implements OnInit {
 
   myReactiveForm: FormGroup;
-  weakPasswordText = "Слабый пароль";
+  weakPasswordText = 'Слабый пароль';
 
   constructor(private fb: FormBuilder,
               private printToConsoleService: PrintToConsoleService) { }
@@ -31,13 +31,11 @@ export class UserRegistrationComponent implements OnInit {
     });
   }
 
-  isControlInvalid(controlName: string): boolean {
+  /*isControlInvalid(controlName: string): boolean {
     const control = this.myReactiveForm.controls[controlName];
 
-    const result = control.invalid && control.touched;
-
-    return result;
-  }
+    return control.invalid && control.touched;
+  }*/
 
   onSubmit() {
     const controls = this.myReactiveForm.controls;
