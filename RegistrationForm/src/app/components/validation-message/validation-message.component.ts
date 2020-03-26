@@ -1,27 +1,34 @@
-import {Component, Input, Optional} from '@angular/core';
-import {
-  ControlContainer,
-  FormControl, FormGroup,
-} from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {AbstractControl, FormControl} from '@angular/forms';
+import {TranslationsService} from '../../services/translations/translations.service';
 
 @Component({
   selector: 'app-validation-message',
   templateUrl: './validation-message.component.html',
   styleUrls: ['./validation-message.component.scss']
 })
-export class ValidationMessageComponent {
+export class ValidationMessageComponent implements OnInit {
 
   @Input()
-  public controlName: string;
+  control: AbstractControl;
 
-  constructor(@Optional() private controlContainer: ControlContainer) {}
-
-  get form(): FormGroup {
-    return this.controlContainer.control as FormGroup;
+  get errors() {
+    return Object.keys(this.control.errors);
   }
 
-  get control(): FormControl {
-    return this.form.get(this.controlName) as FormControl;
+  constructor(private translationsService: TranslationsService) {
   }
+
+  ngOnInit(): void {
+  }
+
+  isControlInvalid(): boolean {
+    return this.control && this.control.invalid && this.control.touched;
+  }
+
+  getTranslation(key: string) {
+    return this.translationsService.getTranslation(key);
+  }
+
 }
 

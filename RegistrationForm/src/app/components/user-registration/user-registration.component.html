@@ -1,25 +1,29 @@
 
 <form [formGroup]="myReactiveForm" (submit)="onSubmit()">
-<h3 class="first">User Registration Form</h3>
+  <h3 class="first">{{getTranslation('user_registration_form')}}</h3>
 
-    <div class="ui-inputgroup">
-      <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
-      <input type="text" pInputText placeholder="Username" formControlName="userName">
-    </div>
-  <app-validation-message controlName="userName"> </app-validation-message>
+  <div class="form-group">
+    <input type="text" pInputText placeholder="Username" formControlName="userName" class="form-control">
+    <app-validation-message [control]="myReactiveForm.get('userName')"></app-validation-message>
+  </div>
 
-    <div class="ui-inputgroup">
-      <span class="ui-inputgroup-addon">@</span>
-      <input type="text" pInputText placeholder="Email" formControlName="userEmail">
-    </div>
-  <app-validation-message controlName="userEmail"> </app-validation-message>
+  <div class="form-group">
+    <input type="text" pInputText placeholder="Email" formControlName="userEmail" class="form-control">
+    <app-validation-message [control]="myReactiveForm.get('userEmail')"></app-validation-message>
+  </div>
 
-    <div class="ui-inputgroup">
-      <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
-      <input type="password" pInputText pPassword [weakLabel]="weakPasswordText" formControlName="userPassword"/>
-    </div>
-  <app-validation-message controlName="userPassword"> </app-validation-message>
+  <div class="form-group">
+    <input
+      type="password"
+      pInputText
+      pPassword
+      [weakLabel]="weakPasswordText"
+      formControlName="userPassword"
+      class="form-control"
+      placeholder="password">
+    <app-validation-message [control]="myReactiveForm.get('userPassword')"></app-validation-message>
+  </div>
 
-<button type="submit" class="btn btn-info">Register</button>
+  <button type="submit" class="btn btn-info">Register</button>
 </form>
 
