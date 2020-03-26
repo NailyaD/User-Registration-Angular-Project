@@ -1,11 +1,5 @@
-<div class="error" *ngIf="control && control?.invalid && control?.touched">
-  <div *ngIf="form.get(controlName).errors['required']">
-    Поле не может быть пустым
-  </div>
-  <div *ngIf="form.get(controlName).errors['email']">
-    Некорректный адрес электронной почты
-  </div>
-  <div *ngIf="form.get(controlName).errors['minlength']">
-    Минимальная длина пароля 8 символов
+<div class="error invalid-feedback" *ngIf="isControlInvalid()">
+  <div *ngFor="let error of errors">
+    {{ getTranslation(error) }}
   </div>
 </div>

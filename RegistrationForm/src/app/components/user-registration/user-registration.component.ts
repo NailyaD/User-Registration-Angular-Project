@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PrintToConsoleService} from '../../services/print-to-console/print-to-console.service';
 import {AppValidators} from '../../validators/app-validators';
+import {TranslationsService} from '../../services/translations/translations.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -14,7 +15,8 @@ export class UserRegistrationComponent implements OnInit {
   weakPasswordText = 'Слабый пароль';
 
   constructor(private fb: FormBuilder,
-              private printToConsoleService: PrintToConsoleService) { }
+              private printToConsoleService: PrintToConsoleService,
+              private translationsService: TranslationsService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -31,11 +33,13 @@ export class UserRegistrationComponent implements OnInit {
     });
   }
 
-  /*isControlInvalid(controlName: string): boolean {
+  isControlInvalid(controlName: string): boolean {
     const control = this.myReactiveForm.controls[controlName];
 
-    return control.invalid && control.touched;
-  }*/
+    const result = control.invalid && control.touched;
+
+    return result;
+  }
 
   onSubmit() {
     const controls = this.myReactiveForm.controls;
@@ -45,5 +49,9 @@ export class UserRegistrationComponent implements OnInit {
       return;
     }
     this.printToConsoleService.printRegistrationForm(this.myReactiveForm.value);
+  }
+
+  getTranslation(key: string) {
+    return this.translationsService.getTranslation(key);
   }
 }
